@@ -14,8 +14,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
 
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool {
         // Override point for customization after application launch.
+        
+        // enable notifications
+        
+        let notificationTypes:UIUserNotificationType = UIUserNotificationType.Alert | UIUserNotificationType.Badge | UIUserNotificationType.Sound
+        let notificationSettings:UIUserNotificationSettings = UIUserNotificationSettings(forTypes: notificationTypes, categories: nil)
+        
+        UIApplication.sharedApplication().registerUserNotificationSettings(notificationSettings)
+        
+        //check the opening URL params
+        
+        let components = NSURLComponents(URL: url, resolvingAgainstBaseURL: false)
+        
+        if let queryItems = components?.queryItems as? [NSURLQueryItem]
+        {
+            for (idx: Int, component: NSURLQueryItem) in enumerate(queryItems)
+            {
+                println(component)
+//                swarmChemistryViewController.genomes[idx] = SwarmGenome.fromString(component.value!)
+            }
+        }
+        
         return true
     }
 
